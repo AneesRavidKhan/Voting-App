@@ -22,6 +22,12 @@ stages {
         }
     }
 
+    stage ('BuiArchive-Artifactsld') {
+        steps {
+            archiveArtifacts artifacts: 'target/hello-world.war'
+        }
+    }
+    
 }
 
 }

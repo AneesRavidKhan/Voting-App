@@ -9,6 +9,19 @@ stages {
             sh 'mvn test'
         }
     }
+
+    stage ('Publish-Test-Reports') {
+        steps {
+            junit 'target/surefire-reports/*.xml'
+        }
+    }
+
+    stage ('Build') {
+        steps {
+            sh 'mvn package -DskipTests'
+        }
+    }
+
 }
 
 }

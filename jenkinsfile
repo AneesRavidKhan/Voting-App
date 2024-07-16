@@ -27,7 +27,13 @@ stages {
             archiveArtifacts artifacts: 'target/hello-world.war'
         }
     }
-    
+
+    stage ('Deploy') {
+        steps {
+            scp -i /home/Khan/key.pem target/hello-world.war ubuntu@3.108.218.192:/home/ubuntu/
+        }
+    }
+
 }
 
 }

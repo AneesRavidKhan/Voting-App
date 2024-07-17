@@ -25,6 +25,10 @@ stages {
     stage ('BuiArchive-Artifactsld') {
         steps {
             archiveArtifacts artifacts: 'target/*.war'
+            sh '''
+            scp -i /home/ubuntu/key.pem Dockerfile ubuntu@65.2.182.84:/home/ubuntu/
+            scp -i /home/ubuntu/key.pem target/hello-world.war ubuntu@65.2.182.84:/home/ubuntu/
+            '''
         }
     }
 
@@ -32,11 +36,6 @@ stages {
         agent { label 'ec2-mac' }
         steps {
             sh '''
-            whoami
-            pwd
-            ls -l /home/ubuntu
-            scp -i /home/ubuntu/key.pem Dockerfile ubuntu@65.2.182.84:/home/ubuntu/
-            scp -i /home/ubuntu/key.pem target/hello-world.war ubuntu@65.2.182.84:/home/ubuntu/
             sudo docker build -t java-app:$BUILD_NUMBER
             '''
         }

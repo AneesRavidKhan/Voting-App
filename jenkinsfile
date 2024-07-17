@@ -24,7 +24,20 @@ stages {
 
     stage ('BuiArchive-Artifactsld') {
         steps {
-            archiveArtifacts artifacts: 'target/hello-world.war'
+            sh '''
+            archiveArtifacts artifacts: 'target/hello-world.war            
+            '''
+        }
+    }
+
+    stage ('Build-DockerImage') {
+        agent { label 'ec2-mac' }
+        steps {
+            sh '''
+            scp Dockerfile ubuntu@65.2.182.84:/home/ubuntu/
+            scp target/hello-world.war ubuntu@65.2.182.84:/home/ubuntu/
+            sudo docker build -t java-app:$BUILD_NUMBER
+            '''
         }
     }
 

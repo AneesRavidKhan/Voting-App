@@ -24,9 +24,7 @@ stages {
 
     stage ('BuiArchive-Artifactsld') {
         steps {
-            sh '''
-            archiveArtifacts artifacts: 'target/hello-world.war'          
-            '''
+            archiveArtifacts artifacts: 'target/*.war'
         }
     }
 

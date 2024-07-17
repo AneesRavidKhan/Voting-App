@@ -36,6 +36,9 @@ stages {
         agent { label 'ec2-mac' }
         steps {
             sh '''
+            pwd
+            hostname -i
+            whoami
             sudo docker build -t java-app:$BUILD_NUMBER .
             '''
         }

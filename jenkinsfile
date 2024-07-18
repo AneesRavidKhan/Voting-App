@@ -37,17 +37,21 @@ stages {
         steps {
             sh '''
             sudo docker build -t java-app:$BUILD_NUMBER .
-            sh 'sudo docker run -itd -p 8081:8080 java-app:$BUILD_NUMBER /bin/bash'
+            echo $BUILD_ID
+            echo $BUILD_NUMBER
             '''
         }
     }
 
-//    stage ('Deploy') {
-//        steps {
-//            agent { label 'ec2-mac' }
-//            sh 'sudo docker run -itd -p 8081:8080 java-app:$BUILD_NUMBER /bin/bash'
-//        }
-//    }
+    stage ('Deploy') {
+        steps {
+            sh '''
+              echo $BUILD_ID
+              echo $BUILD_NUMBER
+              ssh ubuntu@65.2.182.84 'sudo docker run -itd -p 8081:8080 java-app:$BUILD_NUMBER'
+            '''
+        }
+    }
 
 }
 
